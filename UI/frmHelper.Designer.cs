@@ -34,12 +34,14 @@
             cmdCurrentUser = new Button();
             cmdAllUsers = new Button();
             cmdRemoveAllAssociations = new Button();
+            label1 = new Label();
+            cmbSelectLanguage = new ComboBox();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // cmdRemoveContextMenu
             // 
-            cmdRemoveContextMenu.Location = new Point(12, 82);
+            cmdRemoveContextMenu.Location = new Point(16, 119);
             cmdRemoveContextMenu.Name = "cmdRemoveContextMenu";
             cmdRemoveContextMenu.Size = new Size(348, 23);
             cmdRemoveContextMenu.TabIndex = 1;
@@ -49,7 +51,7 @@
             // 
             // cmdExit
             // 
-            cmdExit.Location = new Point(146, 162);
+            cmdExit.Location = new Point(150, 199);
             cmdExit.Name = "cmdExit";
             cmdExit.Size = new Size(75, 23);
             cmdExit.TabIndex = 2;
@@ -61,7 +63,7 @@
             // 
             groupBox1.Controls.Add(cmdCurrentUser);
             groupBox1.Controls.Add(cmdAllUsers);
-            groupBox1.Location = new Point(12, 18);
+            groupBox1.Location = new Point(16, 55);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(348, 58);
             groupBox1.TabIndex = 5;
@@ -90,7 +92,7 @@
             // 
             // cmdRemoveAllAssociations
             // 
-            cmdRemoveAllAssociations.Location = new Point(12, 121);
+            cmdRemoveAllAssociations.Location = new Point(16, 158);
             cmdRemoveAllAssociations.Name = "cmdRemoveAllAssociations";
             cmdRemoveAllAssociations.Size = new Size(348, 23);
             cmdRemoveAllAssociations.TabIndex = 6;
@@ -98,21 +100,46 @@
             cmdRemoveAllAssociations.UseVisualStyleBackColor = true;
             cmdRemoveAllAssociations.Click += cmdRemoveAllAssociations_Click;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(16, 19);
+            label1.Name = "label1";
+            label1.Size = new Size(101, 15);
+            label1.TabIndex = 7;
+            label1.Text = "Selecionar Idioma";
+            // 
+            // cmbSelectLanguage
+            // 
+            cmbSelectLanguage.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbSelectLanguage.FormattingEnabled = true;
+            cmbSelectLanguage.Location = new Point(123, 16);
+            cmbSelectLanguage.Name = "cmbSelectLanguage";
+            cmbSelectLanguage.Size = new Size(229, 23);
+            cmbSelectLanguage.TabIndex = 9;
+            cmbSelectLanguage.SelectedIndexChanged += cmbSelectLanguage_SelectedIndexChanged;
+            // 
             // frmHelper
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(373, 197);
+            CancelButton = cmdExit;
+            ClientSize = new Size(373, 240);
+            Controls.Add(cmbSelectLanguage);
+            Controls.Add(label1);
             Controls.Add(cmdRemoveAllAssociations);
             Controls.Add(groupBox1);
             Controls.Add(cmdExit);
             Controls.Add(cmdRemoveContextMenu);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Name = "frmHelper";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Emulator Extension Helper";
             Load += frmHelper_Load;
             groupBox1.ResumeLayout(false);
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -122,5 +149,7 @@
         private Button cmdCurrentUser;
         private Button cmdAllUsers;
         private Button cmdRemoveAllAssociations;
+        private Label label1;
+        private ComboBox cmbSelectLanguage;
     }
 }

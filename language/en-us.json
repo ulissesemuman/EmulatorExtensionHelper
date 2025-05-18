@@ -37,5 +37,9 @@
   "MainForm.GroupBoxAddContext": "Add options to right-click menu in File Explorer",
   "MainForm.CurrentUser": "Only for Me",
   "MainForm.AllUsers": "For All Users",
-  "MainForm.RemoveAllAssociations": "Remove all links from the system"
+  "MainForm.RemoveAllAssociations": "Remove all links from the system",
+  "LanguageManager.MissingLanguageFileMessage": "No language file was found. The default language file (en-us) needs to be downloaded. Do you want to download it now?",
+  "LanguageManager.MissingLanguageFileTitle": "Language File Missing",
+  "LanguageManager.LanguageFileDownloadedMessage": "Language file downloaded successfully. Please restart the application.",
+  "LanguageManager.LanguageFileDownloadedTitle": "Download Complete"
 }

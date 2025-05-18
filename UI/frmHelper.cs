@@ -1,5 +1,7 @@
+using Microsoft.Win32;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 
@@ -9,6 +11,7 @@ namespace EmulatorExtensionHelper
     {
         // Constantes
         private const int BCM_SETSHIELD = 0x160C;
+        private string _currentLanguage = string.Empty;
 
         private static LanguageManager lang = new LanguageManager();
 
@@ -19,23 +22,7 @@ namespace EmulatorExtensionHelper
         {
             InitializeComponent();
 
-            cmdRemoveContextMenu.Name = nameof(cmdRemoveContextMenu);
-            cmdRemoveContextMenu.Text = lang.T("MainForm.RemoveContextMenu");
-
-            cmdExit.Name = nameof(cmdExit);
-            cmdExit.Text = lang.T("Common.Exit");
-
-            groupBox1.Name = nameof(groupBox1);
-            groupBox1.Text = lang.T("MainForm.GroupBoxAddContext");
-
-            cmdCurrentUser.Name = nameof(cmdCurrentUser);
-            cmdCurrentUser.Text = lang.T("MainForm.CurrentUser");
-
-            cmdAllUsers.Name = nameof(cmdAllUsers);
-            cmdAllUsers.Text = lang.T("MainForm.AllUsers");
-
-            cmdRemoveAllAssociations.Name = nameof(cmdRemoveAllAssociations);
-            cmdRemoveAllAssociations.Text = lang.T("MainForm.RemoveAllAssociations");
+            ReloadControlsText();
 
             cmdAllUsers.FlatStyle = FlatStyle.System; // Necessário para que o botão aceite o escudo
             ShowShield(cmdAllUsers, !Library.IsRunningAsAdmin());
@@ -65,14 +52,14 @@ namespace EmulatorExtensionHelper
                 return;
             }
 
-            ContextMenuInstaller.CreateContextMenu(true);
+            ContextMenuInstaller.CreateContextMenu(true, false);
 
             MessageBox.Show("Menu de contexto adicionado com sucesso.");
         }
 
         private void cmdCurrentUser_Click(object sender, EventArgs e)
         {
-            ContextMenuInstaller.CreateContextMenu(false);
+            ContextMenuInstaller.CreateContextMenu(false, false);
 
             MessageBox.Show("Menu de contexto adicionado com sucesso.");
         }
@@ -82,11 +69,73 @@ namespace EmulatorExtensionHelper
             ConfigManager.EnsureConfigFileExists();
             LanguageManager.EnsureLanguageFolderExists();
             LanguageManager.EnsureDefaultLanguageFileAsync();
+
+            _currentLanguage = ConfigManager.GetConfig().Language.ToLower();
+
+            cmbSelectLanguage.DataSource = new BindingSource(LanguageManager.GetLanguageDisplayNames(), null);
+            cmbSelectLanguage.DisplayMember = "Value";
+            cmbSelectLanguage.ValueMember = "Key";
+
+            string isoToSelect = System.Globalization.CultureInfo.CurrentUICulture.Name.ToLower();
+
+            FindAndSelectLanguage(isoToSelect);
+
+            if (cmbSelectLanguage.SelectedItem is null)
+            {
+                FindAndSelectLanguage(LanguageManager.DefaultLanguage);
+            }
         }
 
         private void cmdRemoveAllAssociations_Click(object sender, EventArgs e)
         {
             FileAssociationHelper.RemoveAllEmulatorExtensionHelperiations();
+        }
+
+        private void FindAndSelectLanguage(string isoCode)
+        {
+            foreach (KeyValuePair<string, string> item in cmbSelectLanguage.Items)
+            {
+                if (item.Key.Equals(isoCode, StringComparison.OrdinalIgnoreCase))
+                {
+                    cmbSelectLanguage.SelectedItem = item;
+                    break;
+                }
+            }
+        }
+
+        private void cmbSelectLanguage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbSelectLanguage.SelectedItem is KeyValuePair<string, string> selectedItem)
+            {
+                string selectedKey = selectedItem.Key;
+                string selectedValue = selectedItem.Value;
+
+                if (selectedKey == _currentLanguage)
+                    return;
+
+                _currentLanguage = selectedKey;
+
+                ConfigManager.UpdateLanguage(selectedKey);
+
+                lang = new LanguageManager();
+
+                ReloadControlsText();
+
+                if (Registry.ClassesRoot.OpenSubKey(@"*\shell\EmulatorHelper\", writable: false) != null)
+                {
+                    ContextMenuInstaller.CreateContextMenu(false, true);
+                }
+            }
+        }
+
+        private void ReloadControlsText()
+        {
+            cmdRemoveContextMenu.Text = lang.T("MainForm.RemoveContextMenu");
+            cmdExit.Text = lang.T("Common.Exit");
+            groupBox1.Text = lang.T("MainForm.GroupBoxAddContext");
+            cmdCurrentUser.Text = lang.T("MainForm.CurrentUser");
+            cmdAllUsers.Text = lang.T("MainForm.AllUsers");
+            cmdRemoveAllAssociations.Text = lang.T("MainForm.RemoveAllAssociations");
         }
     }
 }

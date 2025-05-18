@@ -12,8 +12,11 @@ namespace EmulatorExtensionHelper
     {
         private static LanguageManager lang = new LanguageManager();
 
-        public static void CreateContextMenu(bool forAllUsers)
+        public static void CreateContextMenu(bool forAllUsers, bool languageChanged)
         {
+            if (languageChanged)
+                lang = new LanguageManager(); // Atualiza o idioma
+
             string exePath = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
 
             // Raiz do menu de contexto

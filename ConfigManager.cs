@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -12,7 +13,7 @@ namespace EmulatorExtensionHelper
     public class ConfigModel
     {
         [JsonPropertyName("language")]
-        public string Language { get; set; } = "en-us";
+        public string Language { get; set; } = LanguageManager.DefaultLanguage;
 
         [JsonPropertyName("emulators")]
         public Dictionary<string, EmulatorConfig> Emulators { get; set; } = new();
@@ -39,9 +40,9 @@ namespace EmulatorExtensionHelper
 
     internal static class ConfigManager
     {
-        private static LanguageManager lang = new LanguageManager();
+        private static LanguageManager lang;
 
-        public static readonly string ConfigPath;
+        public static readonly string ConfigPath ;
 
         private static ConfigModel _config = new ConfigModel();
 
@@ -52,6 +53,8 @@ namespace EmulatorExtensionHelper
             ConfigPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.json");
 
             LoadConfig();
+
+            lang = new LanguageManager();
         }
 
         public static void LoadConfig()
@@ -364,6 +367,13 @@ namespace EmulatorExtensionHelper
 
             string json = JsonSerializer.Serialize(config, options);
             File.WriteAllText(ConfigPath, json);
+        }
+
+        public static void UpdateLanguage(string newLanguageCode)
+        {
+            Config.Language = newLanguageCode;
+
+            SaveConfig();
         }
     }
 }
