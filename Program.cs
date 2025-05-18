@@ -21,13 +21,13 @@ namespace EmulatorExtensionHelper
             }
             else
             {
-                MessageBox.Show(string.Join(" ", args), "Parâmetros recebidos", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show(string.Join(" ", args), "Parâmetros recebidos", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 //string[] a = { "--action=associateExtension", "--file=F:\\Jogos\\Emuladores\\ROMs\\Master System\\Aztec Adventure -The Golden Road to Paradise.sms" };
 
-                string[] a = { "--action=associateExtension", "--file=F:\\Jogos\\Emuladores\\ROMs\\Mega Drive\\Faery Tale Adventure, The (USA, Europe).md" };
+                //string[] a = { "--action=associateExtension", "--file=F:\\Jogos\\Emuladores\\ROMs\\Mega Drive\\Faery Tale Adventure, The (USA, Europe).md" };
 
-                args = a;
+                //args = a;
 
                 // Executa lógica sem interface com base nos parâmetros
                 ContextActions.Execute(args); // <-- seu código para lidar com ações do menu
