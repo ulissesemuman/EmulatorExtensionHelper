@@ -9,7 +9,7 @@ namespace EmulatorExtensionHelper
 {
     internal static class ContextActions
     {
-        private static LanguageManager lang = new LanguageManager("language", "config.json");
+        private static LanguageManager lang = new LanguageManager();
 
         private class ParsedArgs
         {

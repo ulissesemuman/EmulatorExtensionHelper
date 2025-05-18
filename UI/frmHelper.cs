@@ -10,7 +10,7 @@ namespace EmulatorExtensionHelper
         // Constantes
         private const int BCM_SETSHIELD = 0x160C;
 
-        private static LanguageManager lang = new LanguageManager("language", "config.json");
+        private static LanguageManager lang = new LanguageManager();
 
         [DllImport("user32")]
         private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
@@ -79,7 +79,9 @@ namespace EmulatorExtensionHelper
 
         private void frmHelper_Load(object sender, EventArgs e)
         {
-
+            ConfigManager.EnsureConfigFileExists();
+            LanguageManager.EnsureLanguageFolderExists();
+            LanguageManager.EnsureDefaultLanguageFileAsync();
         }
 
         private void cmdRemoveAllAssociations_Click(object sender, EventArgs e)

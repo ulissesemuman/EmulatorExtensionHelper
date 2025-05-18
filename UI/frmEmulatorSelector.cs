@@ -14,10 +14,11 @@ namespace EmulatorExtensionHelper
 {
     public partial class frmEmulatorSelector : Form
     {
-        private static LanguageManager lang = new LanguageManager("language", "config.json");
+        private static LanguageManager lang = new LanguageManager();
 
         private readonly List<string> emulators;
         private readonly string fileName;
+        private bool isDialogOpen;
 
         public enum ActionType
         {
@@ -26,11 +27,6 @@ namespace EmulatorExtensionHelper
             AssociateExtension,
             DisassociateFileName,
             DisassociateExtension
-        }
-
-        private void frmEmulatorSelector_Deactivate(object sender, EventArgs e)
-        {
-            this.Close();
         }
 
         public frmEmulatorSelector(string fileName, ActionType actionType)
@@ -53,6 +49,9 @@ namespace EmulatorExtensionHelper
                     break;
                 case ActionType.DisassociateExtension:
                     this.emulators = ConfigManager.ListAssociatedEmulators(fileName, true, false);
+                    break;
+                default: 
+                    this.emulators = new List<string>();
                     break;
             }
 
@@ -164,11 +163,14 @@ namespace EmulatorExtensionHelper
 
         private void OpenFileDialog(string fileName, ActionType actionType)
         {
+            this.isDialogOpen = true; // Indica que o diálogo está aberto
+
             this.Visible = false; // Esconde o formulário para evitar que ele fique visível enquanto o diálogo está aberto
 
             using (var openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.Title = lang.T("EmulatorSelector.SelectExecutableTitle");
+
                 openFileDialog.Filter = lang.T("EmulatorSelector.ExecutableFilter");
                 openFileDialog.Multiselect = false;
 
@@ -232,6 +234,12 @@ namespace EmulatorExtensionHelper
             this.Visible = false; // Esconde o formulário para evitar que ele fique visível enquanto o diálogo está aberto
             ConfigManager.DisassociateExtensionWithEmulator(fileName, emulatorName);
             this.Close();
+        }
+
+        private void frmEmulatorSelector_Deactivate(object sender, EventArgs e)
+        {
+            if (!this.isDialogOpen)
+                this.Close(); // Fecha o formulário ao perder o foco
         }
     }
 }

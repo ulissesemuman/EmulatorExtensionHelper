@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace EmulatorExtensionHelper
 {
@@ -13,9 +14,16 @@ namespace EmulatorExtensionHelper
         private Dictionary<string, string> _currentLang = new();
         private Dictionary<string, string> _fallbackLang = new();
 
-        public LanguageManager(string languageFolderPath, string configPath)
+        private const string LanguageFolderPath = "language";
+        private const string LanguageFileName = "en-us.json";
+        private const string LanguageFileUrl = $"https://raw.githubusercontent.com/ulissesemuman/EmulatorExtensionHelper/master/{LanguageFolderPath}/{LanguageFileName}";
+
+        private static LanguageManager lang = new LanguageManager();
+
+        public LanguageManager()
         {
-            string langCode = "pt-br";
+            string langCode = System.Globalization.CultureInfo.CurrentUICulture.Name.ToLower(); ; // exemplo: "pt-br"
+            string configPath = ConfigManager.ConfigPath;
 
             if (File.Exists(configPath))
             {
@@ -28,13 +36,9 @@ namespace EmulatorExtensionHelper
                 }
                 catch { }
             }
-            else
-            {
-                langCode = CultureInfo.CurrentCulture.Name.ToLower(); // exemplo: "pt-br"
-            }
 
-            string langFile = Path.Combine(languageFolderPath, $"{langCode}.json");
-            string fallbackFile = Path.Combine(languageFolderPath, $"en-us.json");
+            string langFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, LanguageFolderPath, $"{langCode}.json");
+            string fallbackFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, LanguageFolderPath, LanguageFileName);
 
             if (File.Exists(fallbackFile))
                 _fallbackLang = JsonSerializer.Deserialize<Dictionary<string, string>>(File.ReadAllText(fallbackFile))!;
@@ -50,6 +54,43 @@ namespace EmulatorExtensionHelper
             if (_currentLang.TryGetValue(key, out var value)) return value;
             if (_fallbackLang.TryGetValue(key, out var fallback)) return fallback;
             return key; // retorna a chave se não encontrado
+        }
+
+        public static void EnsureLanguageFolderExists()
+        {
+            if (!Directory.Exists(LanguageFolderPath))
+            {
+                Directory.CreateDirectory(LanguageFolderPath);
+            }
+        }
+
+        public static async Task EnsureDefaultLanguageFileAsync()
+        {
+            string filePath = Path.Combine(LanguageFolderPath, LanguageFileName);
+
+            if (!File.Exists(filePath))
+            {
+                var result = MessageBox.Show(
+                    lang.T("LanguageManager.MissingLanguageFileMessage"),
+                    lang.T("LanguageManager.MissingLanguageFileTitle"),
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Information);
+
+
+                Directory.CreateDirectory(LanguageFolderPath);
+
+                try
+                {
+                    using HttpClient client = new HttpClient();
+                    string content = await client.GetStringAsync(LanguageFileUrl);
+                    await File.WriteAllTextAsync(filePath, content);
+                }
+                catch (Exception ex)
+                {
+                    // Aqui você pode logar ou alertar o usuário
+                    Console.WriteLine($"Failed to download default language file: {ex.Message}");
+                }
+            }
         }
     }
 }

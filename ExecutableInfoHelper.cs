@@ -10,7 +10,7 @@ namespace EmulatorExtensionHelper
 {
     internal static class ExecutableInfoHelper
     {
-        private static LanguageManager lang = new LanguageManager("language", "config.json");
+        private static LanguageManager lang = new LanguageManager();
 
         public static string GetFriendlyNameFromExecutable(string exePath)
         {

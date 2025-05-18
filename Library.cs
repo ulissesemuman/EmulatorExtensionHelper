@@ -12,7 +12,7 @@ namespace EmulatorExtensionHelper
 {
     internal static class Library
     {
-        private static LanguageManager lang = new LanguageManager("language", "config.json");
+        private static LanguageManager lang = new LanguageManager();
 
         public static bool IsRunningAsAdmin()
         {

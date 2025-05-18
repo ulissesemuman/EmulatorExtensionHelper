@@ -39,15 +39,18 @@ namespace EmulatorExtensionHelper
 
     internal static class ConfigManager
     {
-        private static LanguageManager lang = new LanguageManager("language", "config.json");
+        private static LanguageManager lang = new LanguageManager();
 
-        private static readonly string ConfigPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.json");
+        public static readonly string ConfigPath;
+
         private static ConfigModel _config = new ConfigModel();
 
         public static ConfigModel Config { get => _config; set => _config = value; }
 
         static ConfigManager()
         {
+            ConfigPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.json");
+
             LoadConfig();
         }
 
@@ -342,6 +345,25 @@ namespace EmulatorExtensionHelper
             }
 
             return null;
+        }
+
+        public static void EnsureConfigFileExists()
+        {
+            if (File.Exists(ConfigPath))
+                return;
+
+            var config = new
+            {
+                language = "en-us"
+            };
+
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true
+            };
+
+            string json = JsonSerializer.Serialize(config, options);
+            File.WriteAllText(ConfigPath, json);
         }
     }
 }

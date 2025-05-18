@@ -10,7 +10,7 @@ namespace EmulatorExtensionHelper
 {
     internal static class FileAssociationHelper
     {
-        private static LanguageManager lang = new LanguageManager("language", "config.json");
+        private static LanguageManager lang = new LanguageManager();
 
         public static void AssociateExtensionToLauncher(string extension)
         {
