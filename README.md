@@ -1,5 +1,5 @@
 
-# Emulator Helper
+# 🚀 Emulator Helper
 
 A lightweight Windows utility for easily associating ROM files with your favorite emulators via the Explorer context menu.
 
