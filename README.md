@@ -10,7 +10,7 @@ Emulator Helper is a lightweight Windows utility designed to simplify the proces
 
 - 🔗 File and Extension Associations
   
-      Associate individual ROM files or entire file extensions (e.g., .gba, .sfc, .bin, etc.) with one or more emulators.
+     Associate individual ROM files or entire file extensions (e.g., .gba, .sfc, .bin, etc.) with one or more emulators.
 - 🎮 Associate specific ROM files or entire extensions with one or more emulators
 - 🧠 Smart emulator name detection from metadata and registry
 - 👤 Support for per-user or all-user installations
