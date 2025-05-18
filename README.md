@@ -109,36 +109,13 @@ Use the app’s interface to:
   
 ## 🛠️ Usage
 
-Run the Helper
+1. Right-click any file type in Explorer to show options:
+- "Associate extension with emulator"
+- "Associate file with emulator"
+- "Remove extension association from emulator"
+- "Remove file association from emulator"
 
-Launch the application to access the configuration UI.
-
-Add Context Menu Options
-
-Choose whether to install for the current user or for all users.
-
-Adds options like:
-
-"Associate this file with an emulator"
-
-"Associate this extension with an emulator"
-
-"Remove association"
-
-Manage Emulators
-
-Select emulator executables.
-
-Emulator Helper will extract a friendly name using metadata or registry entries.
-
-Configure Associations
-
-Open any ROM file and choose from the emulators you’ve registered.
-
-File hash-based association ensures tracking even if moved.
-
-
-3. Right-click any supported file type in Explorer and associate it with an emulator!
+2. Double-click any file type in Explorer to open meni with associated emulators
 
 ## 📸 Screenshots
 
