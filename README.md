@@ -53,7 +53,7 @@ The launcher will then show a friendly UI listing all configured emulators, allo
 - Select or modify emulator associations
 - Remove existing associations
 
-## Emulator Configuration
+## ⚙️**Emulator Configuration**
 
 Emulators are managed via a centralized `config.json` file:
 
