@@ -1,76 +1,78 @@
-🕹️ Emulator Helper
-Emulator Helper is a lightweight Windows utility designed to simplify the process of associating ROM files with emulators through the Windows Explorer context menu. It allows users to configure which emulator to use for specific file extensions or even for individual ROM files, with just a few clicks.
 
-✨ Features
-🔗 File and Extension Associations
-Associate individual ROM files or entire file extensions (e.g., .gba, .sfc, .bin, etc.) with one or more emulators.
+# Emulator Helper
 
-📂 Context Menu Integration
-Adds custom options to the right-click menu in Windows Explorer for quick access to your configured emulators.
+A lightweight Windows utility for easily associating ROM files with your favorite emulators via the Explorer context menu.
 
-👥 Per-User or All Users Installation
-Choose whether to install context menu options for the current user only or for all users (requires elevation).
+![Context Menu](https://raw.githubusercontent.com/your-username/your-repo/main/assets/context-menu.png)
+![Selection UI](https://raw.githubusercontent.com/your-username/your-repo/main/assets/selection-ui.png)
 
-🧼 Uninstallation Tools
-Easily remove all context menu entries and emulator associations created by the app.
+## Features
 
-🔄 Dynamic Emulator Selection
-If more than one emulator is associated with a file or extension, you will be prompted to choose one at runtime.
+- ✅ Add or remove context menu options for specific file types
+- 🎮 Associate specific ROM files or entire extensions with one or more emulators
+- 🔄 Support for multi-disc games and automatic renaming patterns
+- 🧠 Smart emulator name detection from metadata and registry
+- 👤 Support for per-user or all-user installations
+- 🗑️ Remove individual associations or clean all registry entries created by the app
 
-🌐 Localization Support
-All user-facing texts are fully localizable using a centralized lang.T("...") system. Default language: Portuguese (pt-BR).
+## How It Works
 
-🛠️ How It Works
-The app manages a JSON configuration file (config.json) which stores:
+The application registers context menu entries under:
+- `HKEY_CURRENT_USER\Software\Classes`
+- (Optional) `HKEY_LOCAL_MACHINE\Software\Classes` for all-users mode
 
-Global emulator registrations with file extensions they support.
+When a user right-clicks a file, the launcher is invoked with parameters like:
 
-Per-file associations (identified using MD5 hash).
+```sh
+EmulatorHelper.exe --action=associate --file="C:\Games\Chrono Trigger (Disc 1).bin"
+```
 
-User preferences and language settings.
+The launcher will then show a friendly UI listing all configured emulators, allowing users to:
 
-Associations are written to the Windows Registry using the Software\Classes path under HKEY_CURRENT_USER, ensuring a non-invasive, user-specific setup. If installing for all users, elevation is requested and registry entries are written under HKEY_LOCAL_MACHINE.
+- Select or modify emulator associations
+- Launch the ROM immediately
+- Remove existing associations
 
-📦 Installation
-Download the latest release from the Releases page.
+## Emulator Configuration
 
-Launch the app and choose:
+Emulators are managed via a centralized `config.json` file:
 
-"Add context menu for current user"
+```json
+{
+  "language": "pt-br",
+  "emulators": {
+    "RetroArch": {
+      "path": "C:\Emulators\RetroArch\retroarch.exe",
+      "extensions": [".sfc", ".gba", ".bin"]
+    }
+  }
+}
+```
 
-or "Add context menu for all users" (requires administrator rights).
+## Localization
 
-Right-click any supported file type in Explorer and associate it with an emulator!
+All user-facing messages are fully localized. English and Brazilian Portuguese are supported out-of-the-box.
 
-🧪 Example Use Case
-You have multiple .bin and .cue files for PlayStation games. With Emulator Helper, you can:
+## Installation
 
-Register DuckStation.exe or ePSXe.exe as emulators for .cue files.
+- Simply run the executable to register context menu options.
+- Choose between **Current User** or **All Users** mode.
+- Administrator privileges required for system-wide installations.
 
-Associate a specific .cue file with DuckStation.
+## Requirements
 
-Right-click any .cue and choose "Open with DuckStation" from the context menu — done!
+- Windows 10 or 11
+- .NET 6.0 Runtime
 
-🔐 Requirements
-Windows 10 or later
+## License
 
-.NET 6 or newer installed
+This project is licensed under the **Unlicense**, which means:
+> You may use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software — no restrictions.
 
-Administrator privileges (only if installing for all users)
+## Contribution
 
-📝 License
-This project is licensed under the MIT License.
+PRs are welcome! Please ensure all `lang.T(...)` messages are localized using the existing JSON structure.
 
-📁 Project Structure (Developer Info)
-pgsql
-Copiar
-Editar
-📦 EmulatorHelper/
-├── 🧠 Core logic (association, hashing, language management)
-├── 📁 UI (WinForms-based main interface and dialogs)
-├── 📄 config.json (auto-generated on first run)
-├── 🌐 lang/ (language files, e.g., pt-br.json)
-├── 📜 LICENSE
-└── 📘 README.md
-🤝 Contributions
-Contributions, suggestions, and translations are welcome! Feel free to fork the project or open issues to report bugs or request features.
+---
+
+© You. Free forever.
