@@ -92,9 +92,9 @@ All user-facing messages are fully localized. English and Brazilian Portuguese a
 This project is licensed under the **MIT License**, which means:
 > You may use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software — must be provided with the original copyright notice and attribution to the developer are included.
 
-## Contribution
+## 🤝 Contribution
 
-PRs are welcome! Please ensure all `lang.T(...)` messages are localized using the existing JSON structure.
+Contributions, suggestions, and translations are welcome (please ensure all `lang.T(...)` messages are localized using the existing JSON structure)! Feel free to fork the project or open issues to report bugs or request features.
 
 ---
 
