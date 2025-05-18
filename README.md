@@ -5,13 +5,16 @@ Emulator Helper is a lightweight Windows utility designed to simplify the proces
 
 ## 📸 Screenshots
 
-Associate ou remove association:
+**Associate ou remove association:**
+
 ![Context Menu](https://raw.githubusercontent.com/ulissesemuman/EmulatorExtensionHelper/master/assets/ContextMenuAssociate.png)
 
-Select previously associated emulators:
+**Select previously associated emulators:**
+
 ![Emulator Selection Menu](https://raw.githubusercontent.com/ulissesemuman/EmulatorExtensionHelper/refs/heads/master/assets/SelectEmulator.png)
 
-Configuration interface:
+**Configuration interface:**
+
 ![Configuration UI](https://raw.githubusercontent.com/ulissesemuman/EmulatorExtensionHelper/master/assets/ConfigurationInterface.png)
 
 ## ✨ Features
