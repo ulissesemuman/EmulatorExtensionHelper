@@ -6,7 +6,7 @@ A lightweight Windows utility for easily associating ROM files with your favorit
 ![Context Menu](https://raw.githubusercontent.com/your-username/your-repo/main/assets/context-menu.png)
 ![Selection UI](https://raw.githubusercontent.com/your-username/your-repo/main/assets/selection-ui.png)
 
-## 🚀Features
+## 🚀 Features
 
 - ✅ Add or remove context menu options for specific file types
 - 🎮 Associate specific ROM files or entire extensions with one or more emulators
@@ -15,7 +15,7 @@ A lightweight Windows utility for easily associating ROM files with your favorit
 - 👤 Support for per-user or all-user installations
 - 🗑️ Remove individual associations or clean all registry entries created by the app
 
-## How It Works
+## 🛠️ How It Works
 
 The application registers context menu entries under:
 - `HKEY_CURRENT_USER\Software\Classes`
@@ -49,11 +49,11 @@ Emulators are managed via a centralized `config.json` file:
 }
 ```
 
-## Localization
+## 💬 Localization
 
 All user-facing messages are fully localized. English and Brazilian Portuguese are supported out-of-the-box.
 
-## Installation
+## 📦 Installation
 
 - Simply run the executable to register context menu options.
 - Choose between **Current User** or **All Users** mode.
