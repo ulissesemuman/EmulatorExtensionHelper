@@ -1,0 +1,23 @@
+{
+  "language": "pt-br",
+  "emulators": {
+    "Retroarch": {
+      "path": "C:\\Emuladores\\RetroArch\\retroarch.exe",
+      "extensions": [ ".nes", ".md", ".gba", ".smc" ]
+    },
+    "Ssnes9x": {
+      "path": "C:\\Emuladores\\Snes9x\\snes9x.exe",
+      "extensions": [ ".sfc", ".smc" ]
+    }
+  },
+  "files": {
+    "e5e841c94b68250a6d00d11521e5139a": {
+      "path": "C:\\Emuladores\\ROMs\\tetris.gba",
+      "emulators": [ "Retroarch", "Ssnes9x" ]
+    },
+    "f12841c94b68250a6d00d11521e5139a": {
+      "path": "C:\\Emuladores\\ROMs\\sonic.sms",
+      "emulators": [ "Retroarch", "Gens" ]
+    }
+  }
+}

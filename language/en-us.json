@@ -1,0 +1,9 @@
+{
+  "menu.Associate": "Associate",
+  "menu.AssociateThisExtension": "Associate extension with emulator",
+  "menu.AssociateThisFile": "Associate file with emulator",
+  "menu.DisassociateThisExtension": "Remove extension association from emulator",
+  "menu.DisassociateThisFile": "Remove file association from emulator",
+  "menu.RemoveAssociation": "Remove association",
+  "menu.Root": "Emulator Helper"
+}
