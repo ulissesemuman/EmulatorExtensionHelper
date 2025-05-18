@@ -11,10 +11,30 @@ Emulator Helper is a lightweight Windows utility designed to simplify the proces
 - 🔗 File and Extension Associations
 
      Associate individual ROM files or entire file extensions (e.g., .gba, .sfc, .bin, etc.) with one or more emulators.
-- 🎮 Associate specific ROM files or entire extensions with one or more emulators
-- 🧠 Smart emulator name detection from metadata and registry
+- 📂 Context Menu Integration
+
+     Adds custom options to the right-click menu in Windows Explorer for quick access to your configured emulators.
+
+- 🔄 Dynamic Emulator Selection
+
+     If more than one emulator is associated with a file or extension, you will be prompted to choose one at runtime.
 - 👤 Support for per-user or all-user installations
-- 🗑️ Remove individual associations or clean all registry entries created by the app
+
+     Choose whether to install context menu options for the current user only or for all users (requires elevation).
+- 🗑️ Uninstallation Tools
+
+     Remove individual associations or clean all registry entries created by the app
+- 🌐 Localization Support
+
+     All user-facing texts are fully localizable using a centralized lang.T("...") system. Default language: Portuguese (en-US).
+     The Emulator Helper interface currently supports the following languages:
+     - 🇧🇷 Portuguese (Brazil)
+     - 🇺🇸 English (United States)
+     
+     The application is fully localizable. Language files are stored in a simple JSON format, allowing easy customization or translation into additional languages. If you'd like to contribute a translation, feel free to submit a pull request or open an issue!  
+- 🧠 Smart emulator name detection
+
+     Automatically extracts a user-friendly name from the emulator executable or system registry.
 
 ## 🛠️ How It Works
 
