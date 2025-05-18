@@ -115,7 +115,8 @@ Use the app’s interface to:
 - "Remove extension association from emulator"
 - "Remove file association from emulator"
 
-2. Double-click any file type in Explorer to open meni with associated emulators
+2. Double-click any file type in Explorer to open menu with associated emulators.
+Note: The first time you double-click a supported file type, you’ll be prompted to enable the Emulator Helper. This helper allows the launcher to display a list of associated emulators when opening a file. Without enabling it, direct launching is not possible due to system permission restrictions for file type associations.
 
 ## 📸 Screenshots
 
