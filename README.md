@@ -77,8 +77,8 @@ All user-facing messages are fully localized. English and Brazilian Portuguese a
 
 1. Download the latest release from the Releases page.
 2. Launch the app and choose:
-- "Add context menu for current user"
-- or "Add context menu for all users" (requires administrator rights).
+     - "Add context menu for current user"
+     - or "Add context menu for all users" (requires administrator rights).
 3. Right-click any supported file type in Explorer and associate it with an emulator!
 
 ## Requirements
