@@ -1,16 +1,16 @@
 
-# Emulator Helper
+# 🕹️ Emulator Helper
 
-A lightweight Windows utility for easily associating ROM files with your favorite emulators via the Explorer context menu.
+Emulator Helper is a lightweight Windows utility designed to simplify the process of associating ROM files with emulators through the Windows Explorer context menu. It allows users to configure a list of emulators to use for specific file extensions or even for individual ROM files, with just a few clicks.
 
 ![Context Menu](https://raw.githubusercontent.com/your-username/your-repo/main/assets/context-menu.png)
 ![Selection UI](https://raw.githubusercontent.com/your-username/your-repo/main/assets/selection-ui.png)
 
-## 🚀 Features
+## ✨ Features
 
-- ✅ Add or remove context menu options for specific file types
+- 🔗 File and Extension Associations
+Associate individual ROM files or entire file extensions (e.g., .gba, .sfc, .bin, etc.) with one or more emulators.
 - 🎮 Associate specific ROM files or entire extensions with one or more emulators
-- 🔄 Support for multi-disc games and automatic renaming patterns
 - 🧠 Smart emulator name detection from metadata and registry
 - 👤 Support for per-user or all-user installations
 - 🗑️ Remove individual associations or clean all registry entries created by the app
