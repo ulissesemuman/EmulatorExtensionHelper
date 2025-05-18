@@ -32,9 +32,12 @@ Emulator Helper is a lightweight Windows utility designed to simplify the proces
      - 🇺🇸 English (United States)
      
      The application is fully localizable. Language files are stored in a simple JSON format, allowing easy customization or translation into additional languages. If you'd like to contribute a translation, feel free to submit a pull request or open an issue!  
-- 🧠 Smart emulator name detection
+- 🧠 Smart emulator naming
 
-     Automatically extracts a user-friendly name from the emulator executable or system registry.
+     Automatically extracts friendly emulator names from metadata, registry, and manifests.
+- 🔧 Simple configuration
+
+     All settings are stored in a central config.json file.  
 
 ## 🛠️ How It Works
 
@@ -53,7 +56,7 @@ The launcher will then show a friendly UI listing all configured emulators, allo
 - Select or modify emulator associations
 - Remove existing associations
 
-## ⚙️**Emulator Configuration**
+## ⚙️Emulator Configuration
 
 Emulators are managed via a centralized `config.json` file:
 
@@ -62,16 +65,34 @@ Emulators are managed via a centralized `config.json` file:
   "language": "pt-br",
   "emulators": {
     "RetroArch": {
-      "path": "C:\Emulators\RetroArch\retroarch.exe",
-      "extensions": [".sfc", ".gba", ".bin"]
+      "path": "C:\\Emulators\\RetroArch\\retroarch.exe",
+      "extensions": ["gba", "sfc"]
+    }
+  },
+  "files": {
+    "a1b2c3d4...": {
+      "path": "C:\\ROMs\\Metroid.gba",
+      "emulators": ["RetroArch"]
     }
   }
 }
 ```
+- language: Interface language.
+- emulators: Emulator definitions with executable paths and associated extensions.
+- files: Per-ROM associations tracked by MD5 hash.
 
 ## 💬 Localization
 
 All user-facing messages are fully localized. English and Brazilian Portuguese are supported out-of-the-box.
+
+Interface localization is fully supported. Translations are defined via JSON. Example:
+```json
+{
+  "menu.Associate": "Associar",
+  "menu.AssociateThisExtension": "Associar a extensão a um emulador",
+  ...
+}
+```
 
 ## 📦 Installation
 
@@ -79,7 +100,25 @@ All user-facing messages are fully localized. English and Brazilian Portuguese a
 2. Launch the app and choose:
      - "Add context menu for current user"
      - or "Add context menu for all users" (requires administrator rights).
-3. Right-click any supported file type in Explorer and associate it with an emulator!
+
+## Uninstallation
+
+Use the app’s interface to:
+- Remove all context menu entries.
+- Remove all file and extension associations made by the program.
+  
+## 🛠️ Usage
+
+1. Right-click any file type in Explorer to show options:
+- "Associate extension with emulator"
+- "Associate file with emulator"
+- "Remove extension association from emulator"
+- "Remove file association from emulator"
+
+2. Double-click any file type in Explorer to open menu with associated emulators.
+Note: The first time you double-click a supported file type, you’ll be prompted to enable the Emulator Helper. This helper allows the launcher to display a list of associated emulators when opening a file. Without enabling it, direct launching is not possible due to system permission restrictions for file type associations.
+
+## 📸 Screenshots
 
 ## 🔐 Requirements
 
@@ -98,8 +137,8 @@ This project is licensed under the **MIT License**, which means:
 ├── 🧠 Core logic (association, hashing, language management)
 ├── 📁 UI (WinForms-based main interface and dialogs)
 ├── 📄 config.json (auto-generated on first run)
-├── 🌐 lang/ (language files, e.g., pt-br.json)
-├── 📜 LICENSE
+├── 🌐 language/ (language files, e.g., pt-br.json)
+├── 📜 LICENSE.txt
 └── 📘 README.md
 ```
 
