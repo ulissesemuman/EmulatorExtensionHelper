@@ -38,20 +38,19 @@ Emulator Helper is a lightweight Windows utility designed to simplify the proces
 
 ## 🛠️ How It Works
 
-The application registers context menu entries under:
-- `HKEY_CURRENT_USER\Software\Classes`
-- (Optional) `HKEY_LOCAL_MACHINE\Software\Classes` for all-users mode
+The app manages a JSON configuration file (config.json) which stores:
 
-When a user right-clicks a file, the launcher is invoked with parameters like:
+- Global emulator registrations with file extensions they support.
 
-```sh
-EmulatorHelper.exe --action=associate --file="C:\Games\Chrono Trigger (Disc 1).bin"
-```
+- Per-file associations (identified using MD5 hash).
+
+- User preferences and language settings.
+
+Associations are written to the Windows Registry using the Software\Classes path under HKEY_CURRENT_USER, ensuring a non-invasive, user-specific setup. If installing for all users, elevation is requested and registry entries are written under HKEY_LOCAL_MACHINE.
 
 The launcher will then show a friendly UI listing all configured emulators, allowing users to:
 
 - Select or modify emulator associations
-- Launch the ROM immediately
 - Remove existing associations
 
 ## Emulator Configuration
@@ -76,9 +75,11 @@ All user-facing messages are fully localized. English and Brazilian Portuguese a
 
 ## 📦 Installation
 
-- Simply run the executable to register context menu options.
-- Choose between **Current User** or **All Users** mode.
-- Administrator privileges required for system-wide installations.
+1. Download the latest release from the Releases page.
+2. Launch the app and choose:
+- "Add context menu for current user"
+- or "Add context menu for all users" (requires administrator rights).
+3. Right-click any supported file type in Explorer and associate it with an emulator!
 
 ## Requirements
 
