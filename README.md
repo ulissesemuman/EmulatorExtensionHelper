@@ -81,13 +81,13 @@ All user-facing messages are fully localized. English and Brazilian Portuguese a
      - or "Add context menu for all users" (requires administrator rights).
 3. Right-click any supported file type in Explorer and associate it with an emulator!
 
-## Requirements
+## 🔐 Requirements
 
 - Windows 10 or later
 - .NET 6 or newer installed
 - Administrator privileges (only if installing for all users)
 
-## License
+## 📝 License
 
 This project is licensed under the **MIT License**, which means:
 > You may use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software — must be provided with the original copyright notice and attribution to the developer are included.
