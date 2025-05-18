@@ -96,7 +96,7 @@ Interface localization is fully supported. Translations are defined via JSON. Ex
 
 ## 📦 Installation
 
-1. Download the latest release from the Releases page.
+1. Download the latest release from the [![Releases](https://img.shields.io/github/v/release/ulissesemuman/EmulatorExtensionHelper?label=release)](https://github.com/ulissesemuman/EmulatorExtensionHelper/releases) page.
 2. Launch the app and choose:
      - "Add context menu for current user"
      - or "Add context menu for all users" (requires administrator rights).
