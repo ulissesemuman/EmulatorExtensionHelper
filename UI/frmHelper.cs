@@ -136,6 +136,7 @@ namespace EmulatorExtensionHelper
             cmdCurrentUser.Text = lang.T("MainForm.CurrentUser");
             cmdAllUsers.Text = lang.T("MainForm.AllUsers");
             cmdRemoveAllAssociations.Text = lang.T("MainForm.RemoveAllAssociations");
+            label1.Text = lang.T("MainForm.SelectLanguage");
         }
     }
 }

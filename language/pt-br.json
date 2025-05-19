@@ -38,6 +38,7 @@
   "MainForm.CurrentUser": "Usuário Atual",
   "MainForm.AllUsers": "Todos os Usuários",
   "MainForm.RemoveAllAssociations": "Remover todas as associações do Registro do Sistema",
+  "MainForm.SelectLanguage": "Selecionar Idioma",
   "LanguageManager.MissingLanguageFileMessage": "Nenhum arquivo de idioma foi encontrado. O arquivo de idioma padrão (en-us) precisa ser baixado. Deseja fazer o download agora?",
   "LanguageManager.MissingLanguageFileTitle": "Arquivo de Idioma Ausente",
   "LanguageManager.LanguageFileDownloadedMessage": "Arquivo de idioma baixado com sucesso. Por favor, reinicie o aplicativo.",
