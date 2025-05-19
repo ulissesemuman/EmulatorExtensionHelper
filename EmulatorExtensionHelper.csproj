@@ -7,10 +7,28 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+	
+    <Company>EmulatorExtensionHelper</Company>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <FileVersion>0.6.1.0</FileVersion>
+    <InformationalVersion>1.0.0+6350339cbe005152ac34c88b1ec9d76c2ccb29fd</InformationalVersion>
+    <Product>EmulatorExtensionHelper</Product>
+    <Title>EmulatorExtensionHelper</Title>
+    <Version>0.6.1.0</Version>
+    <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
+    <TargetPlatformVersion>7.0</TargetPlatformVersion>
+    <Copyright>MIT License</Copyright>
+    <PackageProjectUrl></PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/ulissesemuman/EmulatorExtensionHelper</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
     <Folder Include="language\" />
+    <Folder Include="Properties\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +40,14 @@
     </None>
     <None Update="language\pt-br.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
 

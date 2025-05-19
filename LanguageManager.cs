@@ -103,7 +103,7 @@ namespace EmulatorExtensionHelper
             }
         }
 
-        public static List<string> ListLanguageByFiles()
+        private static List<string> ListLanguageByFiles()
         {
             var result = new List<string>();
 
@@ -132,7 +132,7 @@ namespace EmulatorExtensionHelper
                 try
                 {
                     CultureInfo culture = new CultureInfo(isoCode);
-                    displayName = culture.DisplayName;
+                    displayName = CapitalizeFirstLetterSafe(culture.NativeName);
                 }
                 catch (CultureNotFoundException)
                 {
@@ -143,6 +143,17 @@ namespace EmulatorExtensionHelper
             }
 
             return result;
+        }
+
+        private static string CapitalizeFirstLetterSafe(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+                return input;
+
+            string firstChar = input.Substring(0, 1).ToUpperInvariant();
+            string remainder = input.Substring(1);
+
+            return firstChar + remainder;
         }
     }
 }
