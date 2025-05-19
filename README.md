@@ -3,8 +3,19 @@
 
 Emulator Helper is a lightweight Windows utility designed to simplify the process of associating ROM files with emulators through the Windows Explorer context menu. It allows users to configure a list of emulators to use for specific file extensions or even for individual ROM files, with just a few clicks.
 
-![Context Menu](https://raw.githubusercontent.com/your-username/your-repo/main/assets/context-menu.png)
-![Selection UI](https://raw.githubusercontent.com/your-username/your-repo/main/assets/selection-ui.png)
+## 📸 Screenshots
+
+**Associate ou remove association:**
+
+![Context Menu](https://raw.githubusercontent.com/ulissesemuman/EmulatorExtensionHelper/master/assets/ContextMenuAssociate.png)
+
+**Select previously associated emulators:**
+
+![Emulator Selection Menu](https://raw.githubusercontent.com/ulissesemuman/EmulatorExtensionHelper/refs/heads/master/assets/SelectEmulator.png)
+
+**Configuration interface:**
+
+![Configuration UI](https://raw.githubusercontent.com/ulissesemuman/EmulatorExtensionHelper/master/assets/ConfigurationInterface.png)
 
 ## ✨ Features
 
