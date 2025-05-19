@@ -11,7 +11,7 @@ Emulator Helper is a lightweight Windows utility designed to simplify the proces
 
 **Select previously associated emulators:**
 
-![Emulator Selection Menu](https://raw.githubusercontent.com/ulissesemuman/EmulatorExtensionHelper/refs/heads/master/assets/SelectEmulator.png)
+![Emulator Selection Menu](https://raw.githubusercontent.com/ulissesemuman/EmulatorExtensionHelper/master/assets/SelectEmulator.png)
 
 **Configuration interface:**
 
