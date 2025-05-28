@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmHelper));
             cmdRemoveContextMenu = new Button();
             cmdExit = new Button();
             groupBox1 = new GroupBox();
@@ -36,6 +38,7 @@
             cmdRemoveAllAssociations = new Button();
             label1 = new Label();
             cmbSelectLanguage = new ComboBox();
+            contextMenuStrip1 = new ContextMenuStrip(components);
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -119,6 +122,11 @@
             cmbSelectLanguage.TabIndex = 9;
             cmbSelectLanguage.SelectedIndexChanged += cmbSelectLanguage_SelectedIndexChanged;
             // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(61, 4);
+            // 
             // frmHelper
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -132,6 +140,7 @@
             Controls.Add(cmdExit);
             Controls.Add(cmdRemoveContextMenu);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "frmHelper";
             StartPosition = FormStartPosition.CenterScreen;
@@ -151,5 +160,6 @@
         private Button cmdRemoveAllAssociations;
         private Label label1;
         private ComboBox cmbSelectLanguage;
+        private ContextMenuStrip contextMenuStrip1;
     }
 }

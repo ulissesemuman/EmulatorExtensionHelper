@@ -26,8 +26,16 @@ namespace EmulatorExtensionHelper
     {
         [JsonPropertyName("path")]
         public string Path { get; set; }
+        [JsonPropertyName("icon")]
+        public string Icon { get; set; }
         [JsonPropertyName("extensions")]
         public HashSet<string> Extensions { get; set; } = new();
+    }
+
+    public class EmulatorInfo
+    {
+        public string Name { get; set; }
+        public EmulatorConfig Config { get; set; }
     }
 
     public class FileEntry
@@ -104,18 +112,22 @@ namespace EmulatorExtensionHelper
 
         public static ConfigModel GetConfig() => Config;
 
-        public static void AddOrUpdateEmulator(string friendlyName, string path, string extension)
+        public static void AddOrUpdateEmulator(string friendlyName, string path, string extension, string iconFileName)
         {
             if (!Config.Emulators.ContainsKey(friendlyName))
             {
                 Config.Emulators[friendlyName] = new EmulatorConfig
                 {
-                    Path = path,
                     Extensions = new HashSet<string>()
                 };
             }
 
-            Config.Emulators[friendlyName].Extensions.Add(extension);
+            var emulator = Config.Emulators[friendlyName];
+
+            emulator.Path = path;
+            emulator.Icon = iconFileName;
+
+            emulator.Extensions.Add(extension);
         }
 
         public static void AddOrUpdateFileEntry(string hash, string filePath, string emulatorName)
@@ -143,13 +155,13 @@ namespace EmulatorExtensionHelper
             return null;
         }
 
-        public static void AssociateFileWithEmulator(string filePath, string emulatorName, string emulatorPath)
+        public static void AssociateFileWithEmulator(string filePath, string emulatorName, string emulatorPath, string iconFileName)
         {
             string extension = Path.GetExtension(filePath).ToLowerInvariant();
             string hash = FileHashHelper.CalculateMD5(filePath);
             //emulatorPath = GetEmulatorPathByName(emulatorName);
 
-            ConfigManager.AddOrUpdateEmulator(emulatorName, emulatorPath, extension);
+            ConfigManager.AddOrUpdateEmulator(emulatorName, emulatorPath, extension, iconFileName);
 
             string existingHash = FindFileHash(hash, filePath);
             if (existingHash == null)
@@ -162,13 +174,13 @@ namespace EmulatorExtensionHelper
             FileAssociationHelper.AssociateExtensionToLauncher(Path.GetExtension(filePath));
         }
 
-        public static void AssociateExtensionWithEmulator(string filePath, string emulatorName, string emulatorPath)
+        public static void AssociateExtensionWithEmulator(string filePath, string emulatorName, string emulatorPath, string iconFileName)
         {
             string extension = Path.GetExtension(filePath).ToLowerInvariant();
             //emulatorPath = GetEmulatorPathByName(emulatorName);
 
             // Atualiza ou adiciona o emulador com a nova extensão
-            ConfigManager.AddOrUpdateEmulator(emulatorName, emulatorPath, extension);
+            ConfigManager.AddOrUpdateEmulator(emulatorName, emulatorPath, extension, iconFileName);
 
             // Nada é feito com a seção "files" neste método, pois estamos associando por extensão apenas
             ConfigManager.SaveConfig();
@@ -212,7 +224,7 @@ namespace EmulatorExtensionHelper
             if (fileEntry.Emulators.Count == 0)
             {
                 Console.WriteLine("Nenhum emulador restante. Entrada de arquivo será mantida, mas vazia.");
-                // Ou: ConfigManager.Config.Files.Remove(matchingKey);
+                ConfigManager.Config.Files.Remove(matchingKey);
             }
 
             ConfigManager.SaveConfig();
@@ -259,7 +271,7 @@ namespace EmulatorExtensionHelper
             {
                 if (onlyEmulatorsNotAssociated) 
                 {
-                    return ConfigManager.Config.Emulators
+                    return Config.Emulators
                         .Where(pair => !pair.Value.Extensions
                             .Any(ext => string.Equals(ext, Path.GetExtension(filePath.ToLowerInvariant()), StringComparison.OrdinalIgnoreCase)))
                         .Select(pair => pair.Key)
@@ -269,7 +281,7 @@ namespace EmulatorExtensionHelper
                 {
                     var extension = Path.GetExtension(filePath.ToLowerInvariant());
 
-                    return ConfigManager.Config.Emulators
+                    return Config.Emulators
                         .Where(e => e.Value.Extensions.Contains(extension))
                         .Select(e => e.Key)
                         .ToList();
@@ -295,14 +307,12 @@ namespace EmulatorExtensionHelper
 
         public static List<string> ListUnassociatedEmulatorsForFile(string filePath)
         {
-            var config = ConfigManager.GetConfig();
-
             // Calcula o hash MD5 do arquivo
             string hash = FileHashHelper.CalculateMD5(filePath);
             HashSet<string> associatedEmulators = new();
 
             // Verifica se o hash existe em files
-            if (config.Files.TryGetValue(hash, out var fileEntry))
+            if (Config.Files.TryGetValue(hash, out var fileEntry))
             {
                 associatedEmulators = fileEntry.Emulators != null
                     ? new HashSet<string>(fileEntry.Emulators)
@@ -311,7 +321,7 @@ namespace EmulatorExtensionHelper
             else
             {
                 // Verifica se há alguma entrada cujo path coincida com o caminho completo
-                var match = config.Files.Values
+                var match = Config.Files.Values
                     .FirstOrDefault(f => string.Equals(f.Path, filePath, StringComparison.OrdinalIgnoreCase));
 
                 if (match?.Emulators != null)
@@ -321,7 +331,7 @@ namespace EmulatorExtensionHelper
             }
 
             // Retorna os nomes dos emuladores que NÃO estão associados
-            return config.Emulators.Keys
+            return Config.Emulators.Keys
                 .Where(name => !associatedEmulators.Contains(name))
                 .ToList();
         }
@@ -335,14 +345,14 @@ namespace EmulatorExtensionHelper
             if (foundByPath)
                 return true;
 
-            // Calcula o hash MD5 e verifica por hash
+            // Calcula o hash MD5 e verifica por hash"
             string hash = FileHashHelper.CalculateMD5(filePath);
             return ConfigManager.Config.Files.ContainsKey(hash);
         }
 
         public static string? GetEmulatorPathByName(string emulatorName)
         {
-            if (ConfigManager.Config.Emulators.TryGetValue(emulatorName, out var emulatorEntry))
+            if (Config.Emulators.TryGetValue(emulatorName, out var emulatorEntry))
             {
                 return emulatorEntry.Path;
             }
@@ -374,6 +384,151 @@ namespace EmulatorExtensionHelper
             Config.Language = newLanguageCode;
 
             SaveConfig();
+        }
+
+        public static List<EmulatorConfig> ListConfigEmulators(string caminhoConfig)
+        {
+            if (!File.Exists(caminhoConfig))
+                throw new FileNotFoundException("Arquivo config.json não encontrado.", caminhoConfig);
+
+            string json = File.ReadAllText(caminhoConfig);
+
+            // Define um dicionário da seção "emulators"
+            using JsonDocument document = JsonDocument.Parse(json);
+            if (!document.RootElement.TryGetProperty("emulators", out JsonElement emulatorsElement))
+                throw new InvalidDataException("Seção 'emulators' não encontrada no config.json.");
+
+            var emuladores = new List<EmulatorConfig>();
+
+            foreach (JsonProperty emulador in emulatorsElement.EnumerateObject())
+            {
+                EmulatorConfig config = JsonSerializer.Deserialize<EmulatorConfig>(emulador.Value.GetRawText());
+                if (config != null)
+                    emuladores.Add(config);
+            }
+
+            return emuladores;
+        }
+
+        public static List<EmulatorInfo> GetEmulatorsByExtension(string filePath)
+        {
+            string extension = Path.GetExtension(filePath).ToLowerInvariant();
+            var resultado = new List<EmulatorInfo>();
+
+            foreach (var kvp in Config.Emulators)
+            {
+                if (kvp.Value.Extensions.Contains(extension, StringComparer.OrdinalIgnoreCase))
+                {
+                    resultado.Add(new EmulatorInfo
+                    {
+                        Name = kvp.Key,
+                        Config = new EmulatorConfig { Path = kvp.Value.Path, Icon = kvp.Value.Icon, Extensions = kvp.Value.Extensions }
+                    });
+                }
+            }
+
+            return resultado;
+        }
+
+        public static List<EmulatorInfo> GetEmulatorsByRom(string filePath)
+        {
+            var resultado = new List<EmulatorInfo>();
+            var associados = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            string hash = FileHashHelper.CalculateMD5(filePath);
+
+            if (Config.Files.TryGetValue(hash, out var fileEntry))
+            {
+                foreach (var nomeEmulador in fileEntry.Emulators)
+                    associados.Add(nomeEmulador);
+            }
+            else
+            {
+                string nomeArquivo = Path.GetFileName(filePath);
+                foreach (var kvp in Config.Files)
+                {
+                    if (Path.GetFileName(kvp.Value.Path).Equals(nomeArquivo, StringComparison.OrdinalIgnoreCase))
+                    {
+                        foreach (var nomeEmulador in kvp.Value.Emulators)
+                            associados.Add(nomeEmulador);
+                    }
+                }
+            }
+
+            foreach (var nome in associados)
+            {
+                if (Config.Emulators.TryGetValue(nome, out var emulador))
+                {
+                    resultado.Add(new EmulatorInfo
+                    {
+                        Name = nome,
+                        Config = new EmulatorConfig { Path = emulador.Path, Icon = emulador.Icon, Extensions = emulador.Extensions } 
+                    });
+                }
+            }
+
+            return resultado;
+        }
+
+        // Retorna os emuladores que NÃO estão associados à extensão informada
+        public static List<EmulatorInfo> GetEmulatorsWithoutExtension(string filePath)
+        {
+            string extension = Path.GetExtension(filePath).ToLowerInvariant();
+            var resultado = new List<EmulatorInfo>();
+
+            foreach (var kvp in Config.Emulators)
+            {
+                if (!kvp.Value.Extensions.Contains(extension, StringComparer.OrdinalIgnoreCase))
+                {
+                    resultado.Add(new EmulatorInfo
+                    {
+                        Name = kvp.Key,
+                        Config = new EmulatorConfig { Path = kvp.Value.Path, Icon = kvp.Value.Icon, Extensions = kvp.Value.Extensions }
+                    });
+                }
+            }
+
+            return resultado;
+        }
+
+        // Retorna os emuladores que NÃO estão associados à ROM informada (busca por hash, e se não houver, por nome de arquivo)
+        public static List<EmulatorInfo> GetEmulatorsWithoutRom(string filePath)
+        {
+            var associados = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            string hash = FileHashHelper.CalculateMD5(filePath);
+
+            if (Config.Files.TryGetValue(hash, out var fileEntry))
+            {
+                foreach (var nomeEmulador in fileEntry.Emulators)
+                    associados.Add(nomeEmulador);
+            }
+            else
+            {
+                string nomeArquivo = Path.GetFileName(filePath);
+                foreach (var kvp in Config.Files)
+                {
+                    if (Path.GetFileName(kvp.Value.Path).Equals(nomeArquivo, StringComparison.OrdinalIgnoreCase))
+                    {
+                        foreach (var nomeEmulador in kvp.Value.Emulators)
+                            associados.Add(nomeEmulador);
+                    }
+                }
+            }
+
+            var resultado = new List<EmulatorInfo>();
+
+            foreach (var kvp in Config.Emulators)
+            {
+                if (!associados.Contains(kvp.Key))
+                {
+                    resultado.Add(new EmulatorInfo
+                    {
+                        Name = kvp.Key,
+                        Config = new EmulatorConfig { Path = kvp.Value.Path, Icon = kvp.Value.Icon, Extensions = kvp.Value.Extensions }
+                    });
+                }
+            }
+
+            return resultado;
         }
     }
 }

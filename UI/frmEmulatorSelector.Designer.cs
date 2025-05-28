@@ -28,19 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmEmulatorSelector));
             SuspendLayout();
             // 
             // frmEmulatorSelector
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(292, 249);
+            ClientSize = new Size(18, 10);
             FormBorderStyle = FormBorderStyle.None;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "frmEmulatorSelector";
             ShowInTaskbar = false;
             Text = "Form1";
             TopMost = true;
             Deactivate += frmEmulatorSelector_Deactivate;
+            Shown += frmEmulatorSelector_Shown;
             ResumeLayout(false);
         }
 

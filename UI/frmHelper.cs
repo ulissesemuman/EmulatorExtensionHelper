@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
+using static EmulatorExtensionHelper.ContextActions;
+using static EmulatorExtensionHelper.frmEmulatorSelector;
 
 namespace EmulatorExtensionHelper
 {
@@ -84,6 +86,28 @@ namespace EmulatorExtensionHelper
             {
                 FindAndSelectLanguage(LanguageManager.DefaultLanguage);
             }
+
+#if DEBUG
+            ComboBox cmb = new ComboBox();
+            cmb.Location = new Point(this.Width / 2 - 180, this.Height / 2 + 60);
+            cmb.Items.Add("execute");
+            cmb.Items.Add("associatefilename");
+            cmb.Items.Add("associateextension");
+            cmb.Items.Add("disassociatefilename");
+            cmb.Items.Add("disassociateextension");
+            cmb.SelectedIndex = 0;
+            this.Controls.Add(cmb);
+            Button btn = new Button();
+            btn.Text = "Debug";
+            btn.Size = new Size(70, 30);
+            btn.Location = new Point(this.Width / 2 + 50, this.Height / 2 + 60);
+            btn.Visible = true;
+            btn.Click += (s, e) =>
+            {
+                Debug(cmb);
+            };
+            this.Controls.Add(btn);
+#endif
         }
 
         private void cmdRemoveAllAssociations_Click(object sender, EventArgs e)
@@ -137,6 +161,29 @@ namespace EmulatorExtensionHelper
             cmdAllUsers.Text = lang.T("MainForm.AllUsers");
             cmdRemoveAllAssociations.Text = lang.T("MainForm.RemoveAllAssociations");
             label1.Text = lang.T("MainForm.SelectLanguage");
+        }
+
+        private void Debug(ComboBox cmb) 
+        {
+            var dialog = new OpenFileDialog
+            {
+                Title = "Select a file",
+                Filter = "All files (*.*)|*.*",
+                Multiselect = false,
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+            };
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = dialog.FileName;
+ 
+                string[] args = new string[] { "--action=" + cmb.Items[cmb.SelectedIndex].ToString(), "--file=" + filePath };
+                
+                //this.Close();
+
+                ContextActions.FormExecutionMode = FormExecutionModes.ShowDialog;
+                ContextActions.Execute(args);
+            }
         }
     }
 }

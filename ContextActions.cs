@@ -4,85 +4,75 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static EmulatorExtensionHelper.ContextActions;
+using static EmulatorExtensionHelper.frmEmulatorSelector;
 
 namespace EmulatorExtensionHelper
 {
     internal static class ContextActions
     {
         private static LanguageManager lang = new LanguageManager();
+        private static FormExecutionModes formExecutionMode = FormExecutionModes.Run;
+        private static string fileName = string.Empty;
+
+        public static FormExecutionModes FormExecutionMode
+        {
+            get => formExecutionMode;
+            set => formExecutionMode = value;
+        }
 
         private class ParsedArgs
         {
-            public ExecutionMode Mode { get; set; } = ExecutionMode.Unknown;
+            public ExecutionMode ActionType { get; set; } = ExecutionMode.Unknown;
             public string FileName { get; set; } = "";
             public string Extension { get; set; } = "";
         }
 
-        public enum ExecutionMode
+        public enum FormExecutionModes
         {
-            ExecuteEmulator,
-            AssociateFileName,
-            AssociateExtension,
-            DisassociateFileName,
-            DisassociateExtension,
-            Unknown
+            Run,
+            ShowDialog
         }
 
         public static void Execute(string[] args)
         {
             var parsed = ParseArguments(args);
-            switch (parsed.Mode)
+
+            fileName = parsed.FileName;
+
+            var actionType = parsed.ActionType; 
+
+            if (actionType == ExecutionMode.Unknown)
             {
-                case ExecutionMode.ExecuteEmulator:
-                    HandleExecute(parsed.FileName);
-                    break;
-
-                case ExecutionMode.AssociateFileName:
-                    HandleAssociateFileName(parsed.FileName);
-                    break;
-
-                case ExecutionMode.AssociateExtension:
-                    HandleAssociateExtension(parsed.FileName);
-                    break;
-
-                case ExecutionMode.DisassociateFileName:
-                    HandleDisassociateFileName(parsed.FileName);
-                    break;
-
-                case ExecutionMode.DisassociateExtension:
-                    HandleDisassociateExtension(parsed.FileName);
-                    break;
-
-                case ExecutionMode.Unknown:
-                default:
-                    MessageBox.Show(lang.T("ContextActions.InvalidExecutionMode"), lang.T("Common.Error"));
-                    break;
+                MessageBox.Show(lang.T("ContextActions.InvalidExecutionMode"), lang.T("Common.Error"));
+                return;
             }
+
+            ShowForm(parsed.ActionType);
         }
 
-        private static void HandleExecute(string fileName)
+        private static void HandleExecute()
         {
-            Application.Run(new frmEmulatorSelector(fileName, frmEmulatorSelector.ActionType.ExecuteEmulator));
+            ShowForm(ExecutionMode.ExecuteEmulator);
         }
 
-        private static void HandleAssociateFileName(string fileName)
+        private static void HandleAssociateFileName()
         {
-             Application.Run(new frmEmulatorSelector(fileName, frmEmulatorSelector.ActionType.AssociateFileName));
+            ShowForm(ExecutionMode.AssociateFileName);
         }
 
-        private static void HandleAssociateExtension(string fileName)
+        private static void HandleAssociateExtension()
         {
-            Application.Run(new frmEmulatorSelector(fileName, frmEmulatorSelector.ActionType.AssociateExtension));
+            ShowForm(ExecutionMode.AssociateExtension);
         }
 
-        private static void HandleDisassociateFileName(string fileName)
+        private static void HandleDisassociateFileName()
         {
-            Application.Run(new frmEmulatorSelector(fileName, frmEmulatorSelector.ActionType.DisassociateFileName));
+            ShowForm(ExecutionMode.DisassociateFileName);
         }
 
-        private static void HandleDisassociateExtension(string fileName)
+        private static void HandleDisassociateExtension()
         {
-            Application.Run(new frmEmulatorSelector(fileName, frmEmulatorSelector.ActionType.DisassociateExtension));
+            ShowForm(ExecutionMode.DisassociateExtension);
         }
 
         private static ParsedArgs ParseArguments(string[] args)
@@ -94,7 +84,7 @@ namespace EmulatorExtensionHelper
                 if (arg.StartsWith("--action=", StringComparison.OrdinalIgnoreCase))
                 {
                     string mode = arg.Substring("--action=".Length).ToLower();
-                    parsed.Mode = mode switch
+                    parsed.ActionType = mode switch
                     {
                         "execute" => ExecutionMode.ExecuteEmulator,
                         "associatefilename" => ExecutionMode.AssociateFileName,
@@ -112,6 +102,25 @@ namespace EmulatorExtensionHelper
             }
 
             return parsed;
+        }
+
+        private static void ShowForm(ExecutionMode actionType)
+        {
+            switch (FormExecutionMode)
+            {
+                case FormExecutionModes.Run:
+                    Application.Run(new frmEmulatorSelector(fileName, actionType));
+                    break;
+                case FormExecutionModes.ShowDialog:
+                    using (var form = new frmEmulatorSelector(fileName, actionType))
+                    {
+                        form.ShowDialog();
+                    }
+                    break;
+                default:
+                    MessageBox.Show(lang.T("ContextActions.InvalidExecutionMode"), lang.T("Common.Error"));
+                    break;
+            }
         }
     }
 }

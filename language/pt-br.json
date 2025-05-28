@@ -9,6 +9,7 @@
   "ContextActions.InvalidExecutionMode": "Modo de execução inválido ou não reconhecido.",
   "EmulatorSelector.NewEmulator": "Novo Emulador...",
   "EmulatorSelector.LaunchError": "Erro ao iniciar o emulador:",
+  "EmulatorSelector.InstallCoreError": "Erro ao instakar o core do RetroArch.",
   "EmulatorSelector.SelectExecutableTitle": "Selecionar executável do emulador",
   "EmulatorSelector.ExecutableFilter": "Arquivos executáveis (*.exe)|*.exe",
   "ConfigManager.InvalidJson": "Erro ao ler o arquivo de configuração: JSON inválido.",

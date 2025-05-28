@@ -117,4 +117,84 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="contextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAICAAAAEAIACoEAAAFgAAACgAAAAgAAAAQAAAAAEAIAAAAAAAABAAABELAAARCwAAAAAAAAAA
+        AABKQiP/SkIj/0pCI/9KQiP/SkIj/0pCI/9KQiP/SkIj/0pCI/9KQiP/SkIj/0pCI/9KQiP/SkIj/0pC
+        I/9KQiP/SkIj/0pCI/9KQiP/SkIj/0pCI/9KQiP/SkIj/0pCI/9KQiP/SkIj/0pCI/9KQiP/SkIj/0pC
+        I/9KQiP/SkIj/0pCI/9KQiP/SkIj/0pCI/9KQiP/SkIj/0pCI/9KQiP/SkIj/0pCI/9KQiP/SkIj/0pC
+        I/9KQiP/SkIj/0pCI/9KQiP/SkIj/0pCI/9KQiP/SkIj/0pCI/9KQiP/SkIj/0pCI/9KQiP/SkIj/0pC
+        I/9KQiP/SkIj/0pCI/9KQiP/MCod/1FJIv9QSSP/UEkj/1BJI/9QSSP/UEkj/1BJI/9QSSP/UEkj/1BJ
+        I/9QSSP/UEkj/1BJI/9QSSP/UEkj/1BJI/9QSSP/UEkj/1BJI/9QSSP/UEkj/1BJI/9QSSP/UEkj/1BJ
+        I/9QSSP/UEkj/1BJI/9QSSP/UUkj/zAqHf8wKh3/MCod/zAqHf9QSSP/UEkj/1BJI/9QSSP/UEkj/1BJ
+        I/9QSSP/UEkj/1BJI/9QSSP/UEkj/1BJI/9QSSP/UEkj/1BJI/9QSSP/UEkj/1BJI/9QSSP/UEkj/1BJ
+        I/9QSSP/UEkj/1BJI/9QSSP/UEkj/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/1dQ
+        JP9XUCT/V1Ak/1dQJP9XUCT/V1Ak/1dQJP9XUCT/V1Ak/1dQJP9XUCT/V1Ak/1dQJP9XUCT/V1Ak/1dQ
+        JP9XUCT/V1Ak/1dQJP8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/0pCI/8wKh3/SkIj/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf9KQiP/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/0pCI/8wKh3/SkIj/zAqHf9KQiP/MCod/zAq
+        Hf8wKh3/SkIj/zAqHf9KQiP/MCod/0pCI/8wKh3/SkIj/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/UEkj/zAqHf9QSSP/MCod/1BJ
+        I/8wKh3/MCod/zAqHf9QSSP/MCod/1BJI/8wKh3/UEkj/zAqHf9QSSP/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/V1Ak/zAqHf9XUCT/MCod/1dQJP8wKh3/V1Ak/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/8m4nf/JuJ3/ybid/8m4
+        nf/JuJ3/MCod/zAqHf8wKh3/MCod/1dQJP8wKh3/V1Ak/zAqHf8wKh3/MCod/8m4nf/JuJ3/ybid/8m4
+        nf/JuJ3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf/JuJ3/XEtF/1xL
+        Rf9cS0X/XEtF/1xLRf/JuJ3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf/JuJ3/XEtF/1xL
+        Rf9cS0X/XEtF/1xLRf/JuJ3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/ybid/1xL
+        Rf9cS0X/XEtF/1xLRf9cS0X/XEtF/1xLRf/JuJ3/ybid/8m4nf/JuJ3/ybid/8m4nf/JuJ3/ybid/1xL
+        Rf9cS0X/XEtF/1xLRf9cS0X/XEtF/1xLRf/JuJ3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/8m4
+        nf9cS0X/XEtF/1xLRf9cS0X/mLEn/5ixJ/9cS0X/XEtF/1xLRf9cS0X/XEtF/1xLRf9cS0X/XEtF/1xL
+        Rf9cS0X/XEtF/1xLRf+YsSf/mLEn/1xLRf9cS0X/XEtF/1xLRf/JuJ3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/ybid/1xLRf9cS0X/XEtF/1xLRf+YsSf/mLEn/1xLRf9cS0X/XEtF/5ixJ/+YsSf/XEtE/1xL
+        Rf+YsSf/mLEn/1xLRf9cS0X/mLEn/5ixJ/+YsSf/mLEn/1xLRf9cS0X/XEtF/8m4nf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf/JuJ3/XEtF/1xLRf+YsSf/mLEn/5ixJ/+YsSf/mLEn/5ixJ/9cS0X/XEtF/1xL
+        Rf9cS0X/XEtF/1xLRf9cS0X/XEtF/5ixJ/+YsSf/mLEn/5ixJ/+YsSf/mLEn/1xLRf9cS0X/ybid/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/MCod/8m4nf9cS0X/XEtF/5ixJ/+YsSf/mLEn/5ixJ/+YsSf/mLEn/1xL
+        Rf9cS0X/XEtF/1xLRf9cS0X/XEtF/1xLRf9cS0X/mLEn/5ixJ/+YsSf/mLEn/5ixJ/+YsSf/XEtF/1xL
+        Rf/JuJ3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/ybid/1xLRf9cS0X/XEtF/1xLRf+YsSf/mLEn/1xL
+        Rf9cS0X/XEtF/1xLRf9cS0X/XEtF/1xLRf9cS0X/XEtF/1xLRf9cS0X/mLEn/5ixJ/+YsSf/mLEn/1xL
+        Rf9cS0X/XEtF/8m4nf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf/JuJ3/XEtF/1xLRf9cS0X/XEtF/5ix
+        J/+YsSf/XEtF/1xLRf9cS0X/XEtF/1xLRf9cS0X/XEtF/1xLRf9cS0X/XEtF/1xLRf9cS0X/mLEn/5ix
+        J/9cS0X/XEtF/1xLRf9cS0X/ybid/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf/JuJ3/XEtF/1xL
+        Rf9cS0X/XEtF/1xLRf9cS0X/XEtF/1xLRf9cS0X/XEtF/1xLRf9cS0X/XEtF/1xLRf9cS0X/XEtF/1xL
+        Rf9cS0X/XEtF/1xLRf9cS0X/XEtF/8m4nf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf/JuJ3/XEtF/1xLRf9cS0X/XEtF/1xLRf9cS0X/XEtF/1xLRf9cS0X/XEtF/1xLRf9cS0X/XEtF/1xL
+        Rf9cS0X/XEtF/1xLRf9cS0X/XEtF/1xLRf/JuJ3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf/JuJ3/ybid/8m4nf/JuJ3/ybid/8m4nf/JuJ3/ybid/8m4nf/JuJ3/ybid/8m4
+        nf/JuJ3/ybid/8m4nf/JuJ3/ybid/8m4nf/JuJ3/ybid/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf9XUCT/MCod/1dQJP8wKh3/V1Ak/zAq
+        Hf9XUCT/MCod/1dQJP8wKh3/V1Ak/zAqHf9XUCT/MCod/1dQJP8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/1BJI/8wKh3/MCod/zAq
+        Hf9QSSP/MCod/1BJI/8wKh3/UEkj/zAqHf9QSSP/MCod/1BJI/8wKh3/UEkj/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/1BJI/8wKh3/UEkj/zAqHf8wKh3/MCod/1BJI/8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/SkIj/zAqHf8wKh3/MCod/zAqHf8wKh3/SkIj/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAqHf8wKh3/MCod/zAq
+        Hf8wKh3/MCod/zAqHf8wKh3/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+</value>
+  </data>
 </root>

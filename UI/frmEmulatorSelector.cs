@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,58 +17,178 @@ namespace EmulatorExtensionHelper
     {
         private static LanguageManager lang = new LanguageManager();
 
-        private readonly List<string> emulators;
+        private readonly List<EmulatorInfo> emulators;
         private readonly string fileName;
+        private readonly ExecutionMode executionMode;
         private bool isDialogOpen;
 
-        public enum ActionType
+        public enum ExecutionMode
         {
             ExecuteEmulator,
             AssociateFileName,
             AssociateExtension,
             DisassociateFileName,
-            DisassociateExtension
+            DisassociateExtension,
+            Unknown
         }
 
-        public frmEmulatorSelector(string fileName, ActionType actionType)
+        public frmEmulatorSelector(string fileName, ExecutionMode actionType)
         {
             InitializeComponent();
 
             switch (actionType)
             {
-                case ActionType.ExecuteEmulator:
-                    this.emulators = ConfigManager.FileExistsInConfig(fileName) ? ConfigManager.ListAssociatedEmulators(fileName, false, false) : ConfigManager.ListAssociatedEmulators(fileName, true, false);
+                case ExecutionMode.ExecuteEmulator:
+                    this.emulators = ConfigManager.FileExistsInConfig(fileName) ? ConfigManager.GetEmulatorsByRom(fileName) : ConfigManager.GetEmulatorsByExtension(fileName);
                     break;
-                case ActionType.AssociateFileName:
-                    this.emulators = ConfigManager.ListUnassociatedEmulatorsForFile(fileName);
+                case ExecutionMode.AssociateFileName:
+                    this.emulators = ConfigManager.GetEmulatorsWithoutRom(fileName);
                     break;
-                case ActionType.AssociateExtension:
-                    this.emulators = ConfigManager.ListAssociatedEmulators(fileName, true, true);
+                case ExecutionMode.AssociateExtension:
+                    this.emulators = ConfigManager.GetEmulatorsWithoutExtension(fileName);
                     break;
-                case ActionType.DisassociateFileName:
-                    this.emulators = ConfigManager.ListAssociatedEmulators(fileName, false, false);
+                case ExecutionMode.DisassociateFileName:
+                    this.emulators = ConfigManager.GetEmulatorsByRom(fileName);
                     break;
-                case ActionType.DisassociateExtension:
-                    this.emulators = ConfigManager.ListAssociatedEmulators(fileName, true, false);
+                case ExecutionMode.DisassociateExtension:
+                    this.emulators = ConfigManager.GetEmulatorsByExtension(fileName);
                     break;
-                default: 
-                    this.emulators = new List<string>();
+                default:
+                    this.emulators = new List<EmulatorInfo>();
                     break;
             }
 
             this.fileName = fileName;
+            this.executionMode = actionType;
 
-            // Configurações para comportamento de menu suspenso
+            // Faz o form ficar completamente invisível
             this.FormBorderStyle = FormBorderStyle.None;
-            this.StartPosition = FormStartPosition.Manual;
             this.ShowInTaskbar = false;
             this.TopMost = true;
-            //this.Deactivate += (s, e) => this.Close(); // Fecha ao perder o foco
-
-            CriarMenu(actionType);
+            this.Opacity = 0;
+            this.Width = 0;
+            this.Height = 0;
+            this.BringToFront();
+            this.Activate(); // força a ativação do form
         }
 
-        private void CriarMenu(ActionType actionType)
+        private void CreateMenu(ExecutionMode actionType)
+        {
+            ContextMenuStrip contextMenu = new ContextMenuStrip();
+
+            contextMenu.Visible = true;
+
+            this.Location = Cursor.Position;
+
+            if (actionType == ExecutionMode.AssociateFileName || actionType == ExecutionMode.AssociateExtension)
+            {
+                var item = new ToolStripMenuItem(lang.T("EmulatorSelector.NewEmulator"));
+                item.Click += (s, e) => OpenFileDialog(fileName, actionType);
+                contextMenu.Items.Add(item);
+            }
+
+            foreach (var emulator in emulators)
+            {
+                var item = new ToolStripMenuItem(emulator.Name);
+
+                // Se for RetroArch, criar submenu com cores
+                if (emulator.Name.Contains("RetroArch", StringComparison.OrdinalIgnoreCase) && actionType == ExecutionMode.ExecuteEmulator)
+                {
+                    SetClickEventForRetroArchMenuItem(item, actionType);
+                }
+                else
+                {
+                    SetClickEventForMenuItem(item, actionType);
+                }
+
+                if (!string.IsNullOrEmpty(emulator.Config.Icon) && File.Exists(emulator.Config.Icon))
+                {
+                    using var fs = new FileStream(emulator.Config.Icon, FileMode.Open, FileAccess.Read);
+                    using var ms = new MemoryStream();
+                    fs.CopyTo(ms);
+                    ms.Position = 0;
+                    item.Image = Image.FromStream(ms);
+                }
+
+                contextMenu.Items.Add(item);
+            }
+
+            contextMenu.Show(Cursor.Position);
+        }
+
+        private void SetClickEventForMenuItem(ToolStripMenuItem item, ExecutionMode actionType)
+        {
+            item.Click += (s, e) =>
+            {
+                switch (actionType)
+                {
+                    case ExecutionMode.ExecuteEmulator:
+                        ExecuteEmulator(item.Text); break;
+                    case ExecutionMode.AssociateFileName:
+                        AssociateFileWithEmulator(this.fileName, item.Text); break;
+                    case ExecutionMode.AssociateExtension:
+                        AssociateExtensionWithEmulator(this.fileName, item.Text); break;
+                    case ExecutionMode.DisassociateFileName:
+                        DisassociateFileWithEmulator(this.fileName, item.Text); break;
+                    case ExecutionMode.DisassociateExtension:
+                        DisassociateExtensionWithEmulator(this.fileName, item.Text); break;
+                }
+            };
+        }
+
+        private void SetClickEventForRetroArchMenuItem(ToolStripMenuItem item, ExecutionMode actionType)
+        {
+            string? retroarchPath = ConfigManager.GetEmulatorPathByName(item.Text);
+
+            if (!string.IsNullOrEmpty(retroarchPath))
+            {
+                var ext = Path.GetExtension(fileName)?.TrimStart('.').ToLowerInvariant();
+                var cores = RetroArchHelper.GetRetroArchCoresForExtension(item.Text, ext ?? "");
+
+                if (actionType == ExecutionMode.ExecuteEmulator)
+                {
+                    foreach (var core in cores)
+                    {
+                        var coreItem = new ToolStripMenuItem(core.DisplayName);
+                        coreItem.Tag = core.Name;
+
+                        // TODO: Chamar SetClickEventForMenuItem quando cada corde for traatado como um emulador standalone
+                        coreItem.Click += (s, e) =>
+                        {
+                            ExecuteEmulator(item.Text, core.Path);
+                        };
+
+                        item.DropDownItems.Add(coreItem);
+                    }
+                }
+
+                //if (actionType != ExecutionMode.ExecuteEmulator)
+                //{
+                //    // Adiciona um item que lista todos os núcleos disponíveis para a extesnão atual
+                //    var allCoresItem = new ToolStripMenuItem(lang.T("EmulatorSelector.AllCores"));
+
+                //    cores = RetroArchHelper.GetMissingRetroArchCores(item.Text, ext ?? "");
+
+                //    foreach (var core in cores)
+                //    {
+                //        var coreItem = new ToolStripMenuItem(core.DisplayName);
+                //        coreItem.Tag = core.Name;
+
+                //        // TODO: Chamar SetClickEventForMenuItem quando cada corde for traatado como um emulador standalone
+                //        coreItem.Click += (s, e) =>
+                //        {
+                //            InstallCore(item.Text, core.Name);
+                //        };
+
+                //        allCoresItem.DropDownItems.Add(coreItem);
+                //    }
+
+                //    item.DropDownItems.Add(allCoresItem);
+                //}
+            }
+        }
+
+        private void CreateMenuLabel(ExecutionMode actionType)
         {
             int alturaItem = 30;
             int largura = 250;
@@ -75,7 +196,7 @@ namespace EmulatorExtensionHelper
 
             this.Location = Cursor.Position;
 
-            if (actionType == ActionType.AssociateFileName || actionType == ActionType.AssociateExtension)
+            if (actionType == ExecutionMode.AssociateFileName || actionType == ExecutionMode.AssociateExtension)
             {
                 var item = new Label
                 {
@@ -106,7 +227,7 @@ namespace EmulatorExtensionHelper
             {
                 var item = new Label
                 {
-                    Text = emulators[i],
+                    Text = emulators[i].ToString(),
                     TextAlign = ContentAlignment.MiddleLeft,
                     BackColor = Color.White,
                     ForeColor = Color.Black,
@@ -122,15 +243,15 @@ namespace EmulatorExtensionHelper
 
                 switch (actionType)
                 {
-                    case ActionType.ExecuteEmulator:
+                    case ExecutionMode.ExecuteEmulator:
                         item.Click += (s, e) => ExecuteEmulator(item.Text); break;
-                    case ActionType.AssociateFileName:
-                        item.Click += (s, e) => AssociateFileWithEmulator(this.fileName, item.Text, string.Empty); break;
-                    case ActionType.AssociateExtension:
-                        item.Click += (s, e) => AssociateExtensionWithEmulator(this.fileName, item.Text, string.Empty); break;
-                    case ActionType.DisassociateFileName:
+                    case ExecutionMode.AssociateFileName:
+                        item.Click += (s, e) => AssociateFileWithEmulator(this.fileName, item.Text); break;
+                    case ExecutionMode.AssociateExtension:
+                        item.Click += (s, e) => AssociateExtensionWithEmulator(this.fileName, item.Text); break;
+                    case ExecutionMode.DisassociateFileName:
                         item.Click += (s, e) => DisassociateFileWithEmulator(this.fileName, item.Text); break;
-                    case ActionType.DisassociateExtension:
+                    case ExecutionMode.DisassociateExtension:
                         item.Click += (s, e) => DisassociateExtensionWithEmulator(this.fileName, item.Text); break;
                 }
 
@@ -138,7 +259,7 @@ namespace EmulatorExtensionHelper
             }
         }
 
-        private void ExecuteEmulator(string nomeEmulador)
+        private void ExecuteEmulator(string nomeEmulador, string corePath = "")
         {
             var config = ConfigManager.GetConfig();
             if (config.Emulators != null && config.Emulators.TryGetValue(nomeEmulador, out EmulatorConfig emuladorInfo))
@@ -148,7 +269,7 @@ namespace EmulatorExtensionHelper
                     Process.Start(new ProcessStartInfo
                     {
                         FileName = emuladorInfo.Path,
-                        Arguments = $"\"{fileName}\"",
+                        Arguments = (corePath != string.Empty ? $"-L \"{corePath}\"" : string.Empty) + $" \"{fileName}\"",
                         UseShellExecute = true
                     });
                 }
@@ -161,7 +282,7 @@ namespace EmulatorExtensionHelper
             this.Close();
         }
 
-        private void OpenFileDialog(string fileName, ActionType actionType)
+        private void OpenFileDialog(string fileName, ExecutionMode actionType)
         {
             this.isDialogOpen = true; // Indica que o diálogo está aberto
 
@@ -180,6 +301,8 @@ namespace EmulatorExtensionHelper
                     string baseName = ExecutableInfoHelper.GetFriendlyNameFromExecutable(exePath);
                     string emulatorName = baseName;
                     var config = ConfigManager.GetConfig();
+                    var icon = IconUtils.ExtractIcon(exePath, 0, false);
+
                     // Verifica se já existe e gera nome alternativo com índice
                     int index = 2;
 
@@ -192,15 +315,17 @@ namespace EmulatorExtensionHelper
                         }
                     }
 
-                    if (actionType == ActionType.AssociateFileName)
+                    string iconFileName = IconUtils.SaveEmulatorIcon(icon, emulatorName);
+
+                    if (actionType == ExecutionMode.AssociateFileName)
                     {
                         //ConfigManager.AddOrUpdateEmulator(emulatorName, exePath, Path.GetExtension(fileName));
-                        ConfigManager.AssociateFileWithEmulator(fileName, emulatorName, exePath);
+                        ConfigManager.AssociateFileWithEmulator(fileName, emulatorName, exePath, iconFileName);
                     }
-                    else if (actionType == ActionType.AssociateExtension)
+                    else if (actionType == ExecutionMode.AssociateExtension)
                     {
                         //ConfigManager.AddOrUpdateEmulator(emulatorName, exePath, Path.GetExtension(fileName));
-                        ConfigManager.AssociateExtensionWithEmulator(fileName, emulatorName, exePath);
+                        ConfigManager.AssociateExtensionWithEmulator(fileName, emulatorName, exePath, iconFileName);
                     }
                 }
             }
@@ -208,17 +333,33 @@ namespace EmulatorExtensionHelper
             this.Close();
         }
 
-        private void AssociateFileWithEmulator(string fileName, string emulatorName, string exePath)
+        private void AssociateFileWithEmulator(string fileName, string emulatorName)
         {
             this.Visible = false; // Esconde o formulário para evitar que ele fique visível enquanto o diálogo está aberto
-            ConfigManager.AssociateFileWithEmulator(fileName, emulatorName, exePath);
+
+            string exePath = ConfigManager.GetEmulatorPathByName(emulatorName) ?? string.Empty;
+
+            var icon = IconUtils.ExtractIcon(exePath, 0, false);
+
+            string iconFileName = IconUtils.SaveEmulatorIcon(icon, emulatorName);
+
+            ConfigManager.AssociateFileWithEmulator(fileName, emulatorName, exePath, iconFileName);
+
             this.Close();
         }
 
-        private void AssociateExtensionWithEmulator(string fileName, string emulatorName, string exePath)
+        private void AssociateExtensionWithEmulator(string fileName, string emulatorName)
         {
             this.Visible = false; // Esconde o formulário para evitar que ele fique visível enquanto o diálogo está aberto
-            ConfigManager.AssociateExtensionWithEmulator(fileName, emulatorName, exePath);
+
+            string exePath = ConfigManager.GetEmulatorPathByName(emulatorName) ?? string.Empty;
+
+            var icon = IconUtils.ExtractIcon(exePath, 0, false);
+
+            string iconFileName = IconUtils.SaveEmulatorIcon(icon, emulatorName);
+
+            ConfigManager.AssociateExtensionWithEmulator(fileName, emulatorName, exePath, iconFileName);
+
             this.Close();
         }
 
@@ -240,6 +381,35 @@ namespace EmulatorExtensionHelper
         {
             if (!this.isDialogOpen)
                 this.Close(); // Fecha o formulário ao perder o foco
+        }
+
+        private void frmEmulatorSelector_Shown(object sender, EventArgs e)
+        {
+            CreateMenu(this.executionMode);
+        }
+
+        private void InstallCore(string retroArchName, string coreName)
+        {
+            string? retroarchPath = ConfigManager.GetEmulatorPathByName(retroArchName);
+            if (!string.IsNullOrEmpty(retroarchPath))
+            {
+                try
+                {
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = retroarchPath,
+                        //Arguments = $"--install-core \"{coreName}\"",
+                        Arguments = $"--download_core \"{coreName}\"",
+                        UseShellExecute = true,
+                        CreateNoWindow = true
+                    });
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"{lang.T("EmulatorSelector.InstallCoreError")}\n{ex.Message}", lang.T("Common.Error"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            this.Close();
         }
     }
 }
