@@ -10,11 +10,11 @@
 	
     <Company>EmulatorExtensionHelper</Company>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <FileVersion>0.6.1.0</FileVersion>
+    <FileVersion>0.7.0.0</FileVersion>
     <InformationalVersion>1.0.0+6350339cbe005152ac34c88b1ec9d76c2ccb29fd</InformationalVersion>
     <Product>EmulatorExtensionHelper</Product>
     <Title>EmulatorExtensionHelper</Title>
-    <Version>0.6.1.0</Version>
+    <Version>0.7.0.0</Version>
     <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
     <TargetPlatformVersion>7.0</TargetPlatformVersion>
     <Copyright>MIT License</Copyright>
